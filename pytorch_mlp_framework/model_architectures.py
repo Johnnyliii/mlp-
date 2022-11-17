@@ -351,6 +351,7 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
         self.dilation = dilation
 
         self.build_module()
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     def build_module(self):
         self.layer_dict = nn.ModuleDict()
@@ -365,18 +366,18 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
         
         #Batch Normalization
         m = nn.BatchNorm2d(out.shape[1])
-        out = m(out).to(torch.cuda.current_device())
+        out = m(out).to(device)
         out = F.leaky_relu(out)
 
         self.layer_dict['conv_1'] = nn.Conv2d(in_channels=out.shape[1], out_channels=self.num_filters, bias=self.bias,
                                               kernel_size=self.kernel_size, dilation=self.dilation,
                                               padding=self.padding, stride=1)
 
-        out = self.layer_dict['conv_1'].forward(out).to(torch.cuda.current_device())
+        out = self.layer_dict['conv_1'].forward(out).to(device)
         
         #Batch Normalization
         m = nn.BatchNorm2d(out.shape[1])
-        out = m(out).to(torch.cuda.current_device())
+        out = m(out).to(device)
         out = F.leaky_relu(out)
 
         print(out.shape)
@@ -385,15 +386,9 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
         out = x
 
         out = self.layer_dict['conv_0'].forward(out)
-        #Batch Normalization
-        m = nn.BatchNorm2d(out.shape[1])
-        out = m(out).to(torch.cuda.current_device())
         out = F.leaky_relu(out)
 
         out = self.layer_dict['conv_1'].forward(out)
-         #Batch Normalization
-        m = nn.BatchNorm2d(out.shape[1])
-        out = m(out).to(torch.cuda.current_device())
         out = F.leaky_relu(out)
 
         return out
