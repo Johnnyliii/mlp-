@@ -363,6 +363,7 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
 
         out = self.layer_dict['conv_0'].forward(out)
         
+        device = y.device
         #Batch Normalization
         m = nn.BatchNorm2d(out.shape[1])
         out = m(out).to(device)
@@ -385,6 +386,7 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
         out = x
 
         out = self.layer_dict['conv_0'].forward(out)
+        device = y.device
         #Batch Normalization
         m = nn.BatchNorm2d(out.shape[1])
         out = m(out).to(device)
