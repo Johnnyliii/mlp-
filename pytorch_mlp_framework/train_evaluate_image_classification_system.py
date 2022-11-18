@@ -38,9 +38,17 @@ test_data = data_providers.CIFAR100(root='data', set_name='test',
                  transform=transform_test,
                  download=True)  # initialize our rngs using the argument set seed
 
+train_data = train_data.to(device)
+val_data = val_data.to(device)
+test_data = test_data.to(device)
+
 train_data_loader = DataLoader(train_data, batch_size=args.batch_size, shuffle=True, num_workers=4)
 val_data_loader = DataLoader(val_data, batch_size=args.batch_size, shuffle=True, num_workers=4)
 test_data_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=4)
+
+train_data_loader = train_data_loader.to(device)
+val_data_loader = val_data_loader.to(device)
+test_data_loader = test_data_loader.to(device)
 
 if args.block_type == 'conv_block':
     processing_block_type = ConvolutionalProcessingBlock
@@ -62,9 +70,8 @@ custom_conv_net = ConvolutionalNetwork(  # initialize our network object, in thi
     num_output_classes=args.num_classes, num_filters=args.num_filters, use_bias=False,
     num_blocks_per_stage=args.num_blocks_per_stage, num_stages=args.num_stages,
     processing_block_type=processing_block_type,
-    dimensionality_reduction_block_type=dim_reduction_block_type)
+    dimensionality_reduction_block_type=dim_reduction_block_type).to(device)
 
-custom_conv_net = custom_conv_net.to(device)
 conv_experiment = ExperimentBuilder(network_model=custom_conv_net,
                                     experiment_name=args.experiment_name,
                                     num_epochs=args.num_epochs,
