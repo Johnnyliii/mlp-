@@ -266,6 +266,7 @@ class ConvolutionalNetwork(nn.Module):
         self.processing_block_type = processing_block_type
         self.dimensionality_reduction_block_type = dimensionality_reduction_block_type
         # build the network
+        self = self.to(device)
         self.build_module()
 
     def build_module(self):
@@ -386,7 +387,7 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
         out = self.layer_dict['conv_0'].forward(out)
          #Batch Normalization
         batchnorm1 = nn.BatchNorm2d(out.shape[1])
-        out = batchnorm1(out).to(device)
+        out = batchnorm1(out)
         out = F.leaky_relu(out)
 
         out = self.layer_dict['conv_1'].forward(out)
