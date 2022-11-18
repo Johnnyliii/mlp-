@@ -264,7 +264,7 @@ class ConvolutionalNetwork(nn.Module):
         self.num_stages = num_stages
         self.processing_block_type = processing_block_type
         self.dimensionality_reduction_block_type = dimensionality_reduction_block_type
-
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # build the network
         self.build_module()
 
