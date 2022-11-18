@@ -2,8 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 class FCCNetwork(nn.Module):
     def __init__(self, input_shape, num_output_classes, num_filters, num_layers, use_bias=False):
         """
@@ -241,7 +239,7 @@ class ConvolutionalDimensionalityReductionBlock(nn.Module):
 class ConvolutionalNetwork(nn.Module):
     def __init__(self, input_shape, num_output_classes, num_filters,
                  num_blocks_per_stage, num_stages, use_bias=False, processing_block_type=ConvolutionalProcessingBlock,
-                 dimensionality_reduction_block_type=ConvolutionalDimensionalityReductionBlock):
+                 dimensionality_reduction_block_type=ConvolutionalDimensionalityReductionBlock, learning_rate = 1e-3):
         """
         Initializes a convolutional network module
         :param input_shape: The shape of the tensor to be passed into this network
@@ -265,8 +263,8 @@ class ConvolutionalNetwork(nn.Module):
         self.num_stages = num_stages
         self.processing_block_type = processing_block_type
         self.dimensionality_reduction_block_type = dimensionality_reduction_block_type
+        self.learning_rate = learning_rate
         # build the network
-        self = self.to(device)
         self.build_module()
 
     def build_module(self):
