@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class FCCNetwork(nn.Module):
     def __init__(self, input_shape, num_output_classes, num_filters, num_layers, use_bias=False):
@@ -264,7 +265,6 @@ class ConvolutionalNetwork(nn.Module):
         self.num_stages = num_stages
         self.processing_block_type = processing_block_type
         self.dimensionality_reduction_block_type = dimensionality_reduction_block_type
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # build the network
         self.build_module()
 
