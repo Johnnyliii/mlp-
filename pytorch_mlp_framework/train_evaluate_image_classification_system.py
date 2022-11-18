@@ -64,6 +64,7 @@ custom_conv_net = ConvolutionalNetwork(  # initialize our network object, in thi
     processing_block_type=processing_block_type,
     dimensionality_reduction_block_type=dim_reduction_block_type)
 
+custom_conv_net = custom_conv_net.to(device)
 conv_experiment = ExperimentBuilder(network_model=custom_conv_net,
                                     experiment_name=args.experiment_name,
                                     num_epochs=args.num_epochs,
