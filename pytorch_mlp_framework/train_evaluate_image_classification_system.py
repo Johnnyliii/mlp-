@@ -13,6 +13,7 @@ import os
 args = get_args()  # get arguments from command line
 rng = np.random.RandomState(seed=args.seed)  # set the seeds for the experiment
 torch.manual_seed(seed=args.seed)  # sets pytorch's seed
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # set up data augmentation transforms for training and testing
 transform_train = transforms.Compose([
@@ -71,4 +72,5 @@ conv_experiment = ExperimentBuilder(network_model=custom_conv_net,
                                     continue_from_epoch=args.continue_from_epoch,
                                     train_data=train_data_loader, val_data=val_data_loader,
                                     test_data=test_data_loader)  # build an experiment object
+conv_experiment = conv_experiment.to(device)
 experiment_metrics, test_metrics = conv_experiment.run_experiment()  # run experiment and return experiment metrics
