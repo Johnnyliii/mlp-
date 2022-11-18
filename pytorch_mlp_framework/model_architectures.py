@@ -449,7 +449,7 @@ class ConvolutionalDimensionalityReductionBlockWithBNandRC(nn.Module):
         out = batchnorm1(out)
         out = F.leaky_relu(out)
 
-        out = F.avg_pool2d(out, self.reduction_factor)
+        #out = F.avg_pool2d(out, self.reduction_factor)
         
         out = self.layer_dict['conv_1'].forward(out)
         #Batch Normalization
