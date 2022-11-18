@@ -386,7 +386,7 @@ class ConvolutionalProcessingBlockWithBatchNormalization(nn.Module):
         out = self.layer_dict['conv_0'].forward(out)
          #Batch Normalization
         batchnorm1 = nn.BatchNorm2d(out.shape[1])
-        out = batchnorm1(out)
+        out = batchnorm1(out).to(device)
         out = F.leaky_relu(out)
 
         out = self.layer_dict['conv_1'].forward(out)
