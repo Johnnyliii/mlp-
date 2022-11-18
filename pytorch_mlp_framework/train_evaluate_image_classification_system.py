@@ -13,7 +13,6 @@ import os
 args = get_args()  # get arguments from command line
 rng = np.random.RandomState(seed=args.seed)  # set the seeds for the experiment
 torch.manual_seed(seed=args.seed)  # sets pytorch's seed
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # set up data augmentation transforms for training and testing
 transform_train = transforms.Compose([
@@ -62,7 +61,7 @@ custom_conv_net = ConvolutionalNetwork(  # initialize our network object, in thi
     num_output_classes=args.num_classes, num_filters=args.num_filters, use_bias=False,
     num_blocks_per_stage=args.num_blocks_per_stage, num_stages=args.num_stages,
     processing_block_type=processing_block_type,
-    dimensionality_reduction_block_type=dim_reduction_block_type).to(device)
+    dimensionality_reduction_block_type=dim_reduction_block_type).to(torch.device('cuda'))
 
 conv_experiment = ExperimentBuilder(network_model=custom_conv_net,
                                     experiment_name=args.experiment_name,
@@ -72,5 +71,5 @@ conv_experiment = ExperimentBuilder(network_model=custom_conv_net,
                                     continue_from_epoch=args.continue_from_epoch,
                                     train_data=train_data_loader, val_data=val_data_loader,
                                     test_data=test_data_loader)  # build an experiment object
-conv_experiment = conv_experiment.to(device)
+conv_experiment = conv_experiment.to(torch.device('cuda'))
 experiment_metrics, test_metrics = conv_experiment.run_experiment()  # run experiment and return experiment metrics
