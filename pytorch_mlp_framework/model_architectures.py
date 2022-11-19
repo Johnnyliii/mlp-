@@ -442,17 +442,16 @@ class ConvolutionalDimensionalityReductionBlockWithBN(nn.Module):
     
         out = self.layer_dict['conv_0'].forward(out)
         #Batch Normalization
-        batchnorm1 = nn.BatchNorm2d(out.shape[1])
-        batchnorm1 = batchnorm1.to(torch.device('cuda'))
-        out = batchnorm1(out)
+        #batchnorm1 = nn.BatchNorm2d(out.shape[1])
+        #out = batchnorm1(out)
         out = F.leaky_relu(out)
 
         out = F.avg_pool2d(out, self.reduction_factor)
 
         out = self.layer_dict['conv_1'].forward(out)
         #Batch Normalization
-        batchnorm2 = nn.BatchNorm2d(out.shape[1])
-        out = batchnorm2(out)
+        #batchnorm2 = nn.BatchNorm2d(out.shape[1])
+        #out = batchnorm2(out)
         out = F.leaky_relu(out)
 
         return out
