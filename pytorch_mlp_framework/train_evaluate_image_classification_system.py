@@ -61,8 +61,7 @@ custom_conv_net = ConvolutionalNetwork(  # initialize our network object, in thi
     num_output_classes=args.num_classes, num_filters=args.num_filters, use_bias=False,
     num_blocks_per_stage=args.num_blocks_per_stage, num_stages=args.num_stages,
     processing_block_type=processing_block_type,
-    dimensionality_reduction_block_type=dim_reduction_block_type,
-    learning_rate = args.learning_rate)
+    dimensionality_reduction_block_type=dim_reduction_block_type)
 custom_con_net = custom_con_net.to(torch.device('cuda'))
 conv_experiment = ExperimentBuilder(network_model=custom_conv_net,
                                     experiment_name=args.experiment_name,
