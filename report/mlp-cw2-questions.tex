@@ -24,9 +24,7 @@
 
 %% Question 1:
 \newcommand{\questionOne} {
-\youranswer{VGG_38 suffers from Vanishing Gradient Problem as we can see from Figure 3 that the average gradient for it is almost constant zero. The consequence is that the weights are not correctly updated and the training and validation loss are not minimized.The training and validation accuracy do not increase as the epoch number increases.
-
-The average length for an answer to this question is approximately 1/5 of the columns in a 2-column page}
+\youranswer{VGG 38 suffers from Vanishing Gradient Problem as we can see from Figure 3 that the average gradient for it is almost constant zero. The consequence is that the weights are not correctly updated and the training and validation loss are not minimized.The training and validation accuracy do not increase as the epoch number increases.}
 }
 
 %% Question 2:
@@ -39,7 +37,7 @@ approximately 1/5 of the columns in a 2-column page}
 
 %% Question 3:
 \newcommand{\questionThree} {
-\youranswer{ui = wi*x, ui' = (ui - μi)/sqrt(σ^2+ epsilon), zi = γiui' + βi = batchNorm(ui). In training time, instead of using the mean and standard deviation of the whole training set, we take a minibatch and computer the mean and standard deviation for the sample in the minibatch. We then normalize each ui with this mean and standard deviation and perform an scalar with γi and a shift with βi. This can normalize the activations of each layer. In test time, we can freeze the weight after training and compute the mean and standard deviation from the whole training set. Vanishing Gradient usually happens when using sigmoid and tanh activation functions. As inputs become very small or very large, sigmoid function approaches closely to 0 and 1 and the tanh function approaches closely to -1 and 1, causing their derivatives to be close to zero. Batch normalization just normalize the input to each layer to ensure they are in good range so that their derivates are not too close to zero, thus mitigating the vanishing gradient problem. 
+\youranswer{ui = wi*x, ui' = (ui - μi)/sqrt(s*s + epsilon), zi = Gamma*ui' + Beta = BatchNorm(ui). In training time, instead of using the mean and standard deviation of the whole training set, we take a minibatch and computer the mean and standard deviation for the sample in the minibatch. We then normalize each ui with this mean and standard deviation and perform an scalar with γi and a shift with βi. This can normalize the activations of each layer. In test time, we can freeze the weight after training and compute the mean and standard deviation from the whole training set. Vanishing Gradient usually happens when using sigmoid and tanh activation functions. As inputs become very small or very large, sigmoid function approaches closely to 0 and 1 and the tanh function approaches closely to -1 and 1, causing their derivatives to be close to zero. Batch normalization just normalize the input to each layer to ensure they are in good range so that their derivates are not too close to zero, thus mitigating the vanishing gradient problem. 
 
 
 The average length of an answer to this question would be around 2/3 of a column in a 2-column page}
@@ -97,7 +95,7 @@ The length of this question description is indicative of the average length of a
 
 %% Question Figure 4:
 \newcommand{\questionFigureFour} {
-\youranswer{Question Figure 4 - Replace this image with a figure depicting the training curves for the model with the best performance \textit{across experiments you have available (you don't need to run the experiments for the models we already give you results for)}. Edit the caption so that it clearly identifies the model and what is depicted.
+\youranswer{
 %
 \begin{figure}[t]
     \centering
@@ -110,7 +108,7 @@ The length of this question description is indicative of the average length of a
 
 %% Question Figure 5:
 \newcommand{\questionFigureFive} {
-\youranswer{Question Figure 5 - Replace this image with a figure depicting the average gradient across layers, for the model with the best performance \textit{across experiments you have available (you don't need to run the experiments for the models we already give you results for)}. Edit the caption so that it clearly identifies the model and what is depicted.
+\youranswer{
 %
 \begin{figure}[t]
     \centering
