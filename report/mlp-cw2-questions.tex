@@ -1,5 +1,5 @@
 %% REPLACE sXXXXXXX with your student number
-\def\studentNumber{sXXXXXXX}
+\def\studentNumber{s2302036}
 
 
 %% START of YOUR ANSWERS
@@ -24,14 +24,12 @@
 
 %% Question 1:
 \newcommand{\questionOne} {
-\youranswer{Question 1 - Use Figures 1, 2, and 3 to identify the Vanishing Gradient Problem (which of these model suffers from it, and what are the consequences depicted?).
-
-The average length for an answer to this question is approximately 1/5 of the columns in a 2-column page}
+\youranswer{VGG 38 suffers from Vanishing Gradient Problem as we can see from Figure 3 that the average gradient for it is almost constant zero. The consequence is that the weights are not correctly updated and the training and validation loss are not minimized.The training and validation accuracy do not increase as the epoch number increases.}
 }
 
 %% Question 2:
 \newcommand{\questionTwo} {
-\youranswer{Question 2 - Consider these results (including Figure 1 from \cite{he2016deep}). Discuss the relation between network capacity and overfitting, and whether, and how, this is reflected on these results. What other factors may have lead to this difference in performance?
+\youranswer{As the network capacity(depth) increases, the accuracy saturates and then decreases. Increasing network capacity might lead to overfitting but also might not. If we consider the Figure 1 from (He et al., 2016), although the test error for 56-layer is greater than 20-layer, the training error for 56-layer is also greater than 20-layer, indicating that the decreased accuracy when increasing network capacity is not due to overfitting. Other factors such as vanishing or exploding gradients might lead to the difference in performance since as the depth of network increases, vanishing or exploding gradients is likely to occur.
 
 The average length for an answer to this question is
 approximately 1/5 of the columns in a 2-column page}
@@ -39,25 +37,28 @@ approximately 1/5 of the columns in a 2-column page}
 
 %% Question 3:
 \newcommand{\questionThree} {
-\youranswer{Question 3 - Describe Batch Normalization (BN) by using equations. Consider both training and test time and explain how BN addresses the vanishing gradient problem. Note that you are not required to provide the derivation of gradients w.r.t. weights for BN weights.
+\youranswer{ui = wi*x, ui' = (ui - μi)/sqrt(s*s + epsilon), zi = Gamma*ui' + Beta = BatchNorm(ui). In training time, instead of using the mean and standard deviation of the whole training set, we take a minibatch and computer the mean and standard deviation for the sample in the minibatch. We then normalize each ui with this mean and standard deviation and perform an scalar with γi and a shift with βi. This can normalize the activations of each layer. In test time, we can freeze the weight after training and compute the mean and standard deviation from the whole training set. Vanishing Gradient usually happens when using sigmoid and tanh activation functions. As inputs become very small or very large, sigmoid function approaches closely to 0 and 1 and the tanh function approaches closely to -1 and 1, causing their derivatives to be close to zero. Batch normalization just normalize the input to each layer to ensure they are in good range so that their derivates are not too close to zero, thus mitigating the vanishing gradient problem. 
+
 
 The average length of an answer to this question would be around 2/3 of a column in a 2-column page}
 }
 
 %% Question 4:
 \newcommand{\questionFour} {
-\youranswer{Question 4 - In this coursework, we didn't incorporate residual connections to the downsampling layers. Explain and justify what would need to be changed in order to add residual connections to the downsampling layers. Give and explain 2 ways of incorporating these changes and discuss pros and cons of each.
+\youranswer{If we want to incorporate residual connections to to the downsampling layers, we also need to downsample the identity x so that it has the same shape with F(x) to perform addition. The first way to achieve this is to use a 1x1 convolution with the same stride parameter and the second way is to an identity mapping with extra zero entries to increase dimensions. The pros for using an identity mapping is that it does not introduce additional parameters while using 1x1 convolution does introduce additional paramters.
 }
 }
 
 
 %% Question 5:
 \newcommand{\questionFive} {
-\youranswer{Question 5 - Present and discuss the experiment results (all of the results and not just the ones you had to fill in) in Table 1 and Figures 4 and 5 (you may use any of the other Figures if you think they are relevant to your analysis). You will have to determine what data are relevant to the discussion, and what information can be extracted from it. Also, discuss what further experiments you would have ran on any combination of VGG08, VGG38, BN, RC in order to
-\begin{itemize}
-    \item Improve performance of the model trained (explain why you expect your suggested experiments will help with this).
-    \item Learn more about the behaviour of BN and RC (explain what you are trying to learn and how).
-\end{itemize}
+\youranswer{From the table we can see that Batch Normalization and Residual Connections can both mitigate the vanishing gradient problem for VGG 38 since we can see from the table that using Batch Normalization and Residual Connections seperately can minimizes the training loss and achieve high training and validation accuracy. We can also see this from the average gradient plot that it no longer stays almost stays zeros as shown in Figure 3. In addition, We can see from the table that using a combination of Batch Normalization and Residual Connections can achieve better validation accuracy than using Batch Normalization and Residual Connections seperately. 
+
+For further experiments to improve performance of the model, we can see that VGG38 BN + RC 1e-2 achieves a higher validation accuracy than VGG38 BN + RC 1e-3 but its validation loss is also higher than VGG BN + RC 1e-3. We will run VGG38 BN + RC with different learning rates ranging from 1e-3 to 1e-2 to see how learning rates affects the validation accuracy and validation loss and try to find a model with better validation accuracy and validation loss. 
+
+For further experiments to learn Batch Normalization ,we can run Batch Normalization with different learning rates to see how it affect the validation accuracy and validation loss. For further experiments to learn RC, we can incorporate residual connections to the downsampling layers and rerun VGG38 RC 1e-3, VGG38 BN + RC 1e-3, VGG38 BN + RC 1e-2 to see how incorporating residual connections to the downsampling layers affects the validation accuracy and validation loss. 
+
+
 
 The average length for an answer to this question is approximately 1 of the columns in a 2-column page}
 }
@@ -85,7 +86,7 @@ The length of this question description is indicative of the average length of a
 %
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\linewidth]{figures/gradplot_38_watermarked.pdf}
+    \includegraphics[width=\linewidth]{figures/grad_flow_vgg38.pdf}
     \caption{Gradient Flow on VGG38}
     \label{fig:grad_flow_38}
 \end{figure}
@@ -94,12 +95,12 @@ The length of this question description is indicative of the average length of a
 
 %% Question Figure 4:
 \newcommand{\questionFigureFour} {
-\youranswer{Question Figure 4 - Replace this image with a figure depicting the training curves for the model with the best performance \textit{across experiments you have available (you don't need to run the experiments for the models we already give you results for)}. Edit the caption so that it clearly identifies the model and what is depicted.
+\youranswer{
 %
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\linewidth]{example-image-duck}
-    \caption{Training curves for ? ? ?}
+    \includegraphics[width=\linewidth]{figures/vgg_38_bn_rc_combine.pdf}
+    \caption{Training curves for VGG38 BN + RC with learning rate 1e-2}
     \label{fig:grad_flow_bestModel}
 \end{figure}
 }
@@ -107,12 +108,12 @@ The length of this question description is indicative of the average length of a
 
 %% Question Figure 5:
 \newcommand{\questionFigureFive} {
-\youranswer{Question Figure 5 - Replace this image with a figure depicting the average gradient across layers, for the model with the best performance \textit{across experiments you have available (you don't need to run the experiments for the models we already give you results for)}. Edit the caption so that it clearly identifies the model and what is depicted.
+\youranswer{
 %
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\linewidth]{example-image-duck}
-    \caption{Gradient Flow on ? ? ?}
+    \includegraphics[width=\linewidth]{figures/vgg_38_bn_rc_gradient_flow.pdf}
+    \caption{Gradient Flow on VGG38 BN + RC with learning rate 1e-2}
     \label{fig:grad_flow_bestModel}
 \end{figure}
 }
